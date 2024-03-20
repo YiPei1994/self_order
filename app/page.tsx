@@ -1,3 +1,9 @@
+import CustomerPage from "./customer/page";
+
 export default async function Index() {
-  return <></>;
+  return (
+    <main className="min-h-screen">
+      <CustomerPage />
+    </main>
+  );
 }

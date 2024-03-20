@@ -1,7 +1,12 @@
 import React from "react";
+import Table from "./Table";
 
-function CustomerLayout() {
-  return <div>CustomerLayout</div>;
+function CustomerPage() {
+  return (
+    <>
+      <Table />
+    </>
+  );
 }
 
-export default CustomerLayout;
+export default CustomerPage;
