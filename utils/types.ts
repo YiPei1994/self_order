@@ -1,5 +1,5 @@
 export type Menu = {
-  id: number;
+  menu_id: number;
   name: string;
   type: string;
   allergies: number[];

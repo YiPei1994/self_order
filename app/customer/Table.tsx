@@ -36,7 +36,7 @@ function Table() {
           <Input
             type="text"
             placeholder="cislo..."
-            defaultValue=""
+            defaultValue="A1"
             onChange={(e) => handleChange(e)}
           />
         </div>

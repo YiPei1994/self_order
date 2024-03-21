@@ -6,7 +6,9 @@ function CustomerLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex flex-col gap-4 justify-center items-center h-screen">
       <Header />
-      <section>{children}</section>
+      <section className="overflow-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary">
+        {children}
+      </section>
       <Footer />
     </div>
   );
