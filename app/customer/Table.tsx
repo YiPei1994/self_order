@@ -27,7 +27,7 @@ function Table() {
     }
   }
   return (
-    <Card>
+    <Card className="bg-primary/10 m-auto  my-10 text-center ">
       <CardHeader>
         <CardTitle>Zadejte cislo vas stul:</CardTitle>
       </CardHeader>
@@ -40,7 +40,7 @@ function Table() {
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between gap-4 ">
           <Button asChild>
             <Link href="/customer/menu">Normalni Menu</Link>
           </Button>

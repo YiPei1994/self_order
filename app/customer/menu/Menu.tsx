@@ -12,7 +12,7 @@ function Menu({ menu }: MenuProps) {
   });
 
   return (
-    <div className="size-[47%] m-1 p-2  border border-primary ">
+    <div className="size-[47%] m-1 p-2  bg-primary/10  ">
       <Link href={`/customer/menu/${menu.menu_id}`}>
         <div className="w-full h-[140px] overflow-hidden">
           <img
@@ -21,10 +21,10 @@ function Menu({ menu }: MenuProps) {
             className="w-full h-full object-cover"
           />
         </div>
-        <p className="text-xl uppercase my-2">{menu.name}</p>
-        <div className="flex justify-between items-center">
+        <p className="text-xl uppercase px-2 my-2">{menu.name}</p>
+        <div className="flex justify-between items-center px-2">
           <p>{menu.price} €</p>
-          <p>{formatAllergies} </p>
+          <p className="text-sm">{formatAllergies} </p>
         </div>
       </Link>
     </div>

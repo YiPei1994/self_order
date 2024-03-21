@@ -7,3 +7,11 @@ export type Menu = {
   ingredients: string;
   image: string;
 };
+
+export type CartItem = {
+  id: string;
+  menu: Menu | undefined;
+  menu_id: number;
+  quantity: number;
+  price: number;
+};
