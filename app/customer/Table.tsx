@@ -27,7 +27,7 @@ function Table() {
     }
   }
   return (
-    <Card className="bg-primary/10 m-auto  my-10 text-center ">
+    <Card className="bg-primary/10 m-auto  my-10 text-center w-[90%] ">
       <CardHeader>
         <CardTitle>Zadejte cislo vas stul:</CardTitle>
       </CardHeader>

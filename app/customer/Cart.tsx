@@ -15,13 +15,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { useCart } from "@/store/CartStore";
-import CartList from "./CartList";
+
+import CartItem from "./CartItem";
 
 function Cart() {
   const { cartList } = useCart();
   return (
     <Drawer>
-      <Button variant={cartList.length === 0 ? "secondary" : "default"} asChild>
+      <Button
+        className={`${
+          cartList.length === 0 ? "opacity-0" : "opacity-100"
+        } transition-all duration-300`}
+        asChild
+      >
         <DrawerTrigger>
           <MdOutlineShoppingCartCheckout className="text-xl" />
         </DrawerTrigger>
@@ -30,7 +36,9 @@ function Cart() {
         <DrawerHeader>
           <DrawerTitle>Vybrane menu</DrawerTitle>
         </DrawerHeader>
-        <CartList />
+        {cartList.map((cartItem) => (
+          <CartItem key={cartItem.id} cartItem={cartItem} />
+        ))}
         <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
