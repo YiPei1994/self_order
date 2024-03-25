@@ -5,7 +5,7 @@
 // extracting this part out into it's own file with 'use client' on top
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import { NextUIProvider } from "@nextui-org/react";
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>

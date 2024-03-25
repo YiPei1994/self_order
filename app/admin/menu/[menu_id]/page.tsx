@@ -20,6 +20,7 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
   const { data: menu, isLoading, error } = useExactMenu(id);
 
   const { addToCart } = useCart();
+
   if (isLoading) return <Spinner />;
   if (error) return <p>{error.message} </p>;
 

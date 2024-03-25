@@ -12,6 +12,7 @@ function MenusList() {
 
   const { data: menus, isLoading, error } = useAllMenus();
 
+  if (isLoading) return <Spinner />;
   if (error) return <p>{error.message} </p>;
 
   let filteredMenus;
@@ -29,7 +30,6 @@ function MenusList() {
       {filteredMenus?.map((menu) => (
         <Menu key={menu.menu_id} menu={menu} />
       ))}
-      <Spinner />
     </div>
   );
 }

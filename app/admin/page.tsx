@@ -12,5 +12,5 @@ export default async function ProtectedPage() {
     return redirect("/login");
   }
 
-  return <div></div>;
+  return redirect("/admin/menu");
 }
