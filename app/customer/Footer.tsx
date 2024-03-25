@@ -12,7 +12,7 @@ function Footer() {
         className={`${
           path.includes("menu") ? "text-primary" : ""
         }  flex flex-col gap-1 justify-center items-center text-md border-r w-1/2`}
-        href="/customer/menu"
+        href={`${path}/menu`}
       >
         <MdRestaurantMenu className="text-2xl" />
         <span>Menu</span>
@@ -21,7 +21,7 @@ function Footer() {
         className={`${
           path.includes("order") ? "text-primary" : ""
         }  flex flex-col gap-1 justify-center items-center text-md border-r w-1/2`}
-        href="/customer/order"
+        href={`${path}/order`}
       >
         <MdOutlineStickyNote2 className="text-2xl" />
         <span>Order</span>

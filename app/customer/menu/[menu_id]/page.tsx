@@ -18,7 +18,6 @@ import { CartItem } from "@/utils/types";
 
 function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
   const id = params.menu_id;
-
   const { data: menu } = useQuery({
     queryKey: ["menu"],
     queryFn: () => getExactMenu(+id),

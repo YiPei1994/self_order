@@ -22,16 +22,14 @@ function Cart() {
   const { cartList } = useCart();
   return (
     <Drawer>
-      <Button
+      <DrawerTrigger
         className={`${
           cartList.length === 0 ? "opacity-0" : "opacity-100"
-        } transition-all duration-300`}
-        asChild
+        } duration-300 transition-all text-2xl text-primary`}
       >
-        <DrawerTrigger>
-          <MdOutlineShoppingCartCheckout className="text-xl" />
-        </DrawerTrigger>
-      </Button>
+        <MdOutlineShoppingCartCheckout />
+      </DrawerTrigger>
+
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Vybrane menu</DrawerTitle>

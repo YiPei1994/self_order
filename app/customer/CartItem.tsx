@@ -13,19 +13,32 @@ type CartItemProps = {
 
 function CartItem({ cartItem }: CartItemProps) {
   const { updateQuantity } = useCart();
-  const { id, quantity, menu } = cartItem;
+  const { id, quantity, menu, price } = cartItem;
+
+  const totalPrice = quantity * price;
   return (
-    <div className="flex gap-4 items-center p-4 bg-primary/10 w-[95%] m-auto">
+    <div className="flex gap-4 items-center p-4 bg-primary/10 w-[95%] m-auto my-2 ">
       <div className="w-[60px] h-auto">
         <img src={menu?.image} alt={menu?.name} />
       </div>
-      <p>{menu?.name} </p>
-      <div className="flex gap-4 items-center">
-        <Button onClick={() => updateQuantity(id, -1)} variant="outline">
+      <div>
+        <p>{menu?.name} </p>
+        <p className="font-bold ">{totalPrice} €</p>
+      </div>
+      <div className="flex gap-4 items-center ml-auto">
+        <Button
+          className="px-2 py-1"
+          onClick={() => updateQuantity(id, -1)}
+          variant="outline"
+        >
           <MdRemove />
         </Button>
         <p>{quantity} </p>
-        <Button onClick={() => updateQuantity(id, 1)} variant="outline">
+        <Button
+          className="px-2 py-1"
+          onClick={() => updateQuantity(id, 1)}
+          variant="outline"
+        >
           <MdAdd />
         </Button>
       </div>
