@@ -12,6 +12,7 @@ function MenusList() {
 
   const { data: menus, isLoading, error } = useAllMenus();
 
+  if (isLoading) return <Spinner />;
   if (error) return <p>{error.message} </p>;
 
   let filteredMenus;

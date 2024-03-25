@@ -15,6 +15,11 @@ import { CartItem } from "@/utils/types";
 import { useExactMenu } from "@/app/api/apiMenu";
 import Spinner from "@/components/ui/Spinner";
 
+import Header from "../../Header";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { MdCreate } from "react-icons/md";
+import CreateEditForm from "../CreateEditForm";
+
 function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
   const id = params.menu_id;
   const { data: menu, isLoading, error } = useExactMenu(id);
@@ -39,40 +44,54 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
     addToCart(newItem);
   }
   return (
-    <Card className="border-0  max-w-[390px]">
-      <CardHeader>
-        <img className="rounded-sm" src={image} alt={name} />
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4 ">
-        <div className="w-full items-center justify-between flex">
-          <p className="text-2xl uppercase font-bold">{name} </p>
-          <Badge className="w-fit self-end mr-2">{type} </Badge>{" "}
-        </div>
+    <>
+      {" "}
+      <Header>
+        <Drawer>
+          <DrawerTrigger>
+            <MdCreate className="text-2xl text-primary" />
+          </DrawerTrigger>
+          <DrawerContent>
+            <CreateEditForm menu={menu} />
+          </DrawerContent>
+        </Drawer>
+      </Header>
+      <Card className="border-0  max-w-[390px]">
+        <CardHeader>
+          <img className="rounded-sm" src={image} alt={name} />
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 ">
+          <div className="w-full items-center justify-between flex">
+            <p className="text-2xl uppercase font-bold">{name} </p>
+            <Badge className="w-fit self-end mr-2">{type} </Badge>{" "}
+          </div>
 
-        <p>{price} €</p>
+          <p>{price} €</p>
 
-        <div className="w-[90%] flex flex-col break-words	 ">
-          <p className="font-bold	 uppercase">prísad:</p> <p> {ingredients} </p>
-        </div>
+          <div className="w-[90%] flex flex-col break-words	 ">
+            <p className="font-bold	 uppercase">prísad:</p>{" "}
+            <p> {ingredients} </p>
+          </div>
 
-        <Button className="w-4/5 m-auto" onClick={handleAdd}>
-          Add to cart
-        </Button>
-      </CardContent>
-      <CardFooter>
-        <ul className="flex flex-col gap-1">
-          {allergies.map((allergy) =>
-            allergyDetail
-              .filter((detail) => allergy === detail.id)
-              .map((detail) => (
-                <li className="text-sm" key={detail.id}>
-                  <span>{detail.id}</span> - <span>{detail.description}</span>{" "}
-                </li>
-              ))
-          )}
-        </ul>
-      </CardFooter>
-    </Card>
+          <Button className="w-4/5 m-auto" onClick={handleAdd}>
+            Add to cart
+          </Button>
+        </CardContent>
+        <CardFooter>
+          <ul className="flex flex-col gap-1">
+            {allergies.map((allergy) =>
+              allergyDetail
+                .filter((detail) => allergy === detail.id)
+                .map((detail) => (
+                  <li className="text-sm" key={detail.id}>
+                    <span>{detail.id}</span> - <span>{detail.description}</span>{" "}
+                  </li>
+                ))
+            )}
+          </ul>
+        </CardFooter>
+      </Card>
+    </>
   );
 }
 

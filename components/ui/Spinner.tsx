@@ -3,9 +3,7 @@ import { WiTime10 } from "react-icons/wi";
 
 function Spinner() {
   return (
-    <svg className="animate-spin w-full h-[50vh] flex justify-center items-center">
-      <WiTime10 className="text-2xl text-primary" />
-    </svg>
+    <WiTime10 className="m-auto mt-20 w-20 animate-spin text-3xl text-primary " />
   );
 }
 

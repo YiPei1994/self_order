@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { MdArrowBack } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { useLogOut } from "../api/apiAuth";
 
-function Header() {
+function Header({ children }: PropsWithChildren) {
   const router = useRouter();
   const path = usePathname();
   const { logOut } = useLogOut();
+
   function handleLogOut() {
     logOut();
     router.push("/login");
@@ -20,6 +21,8 @@ function Header() {
       <Button onClick={() => router.back()}>
         <MdArrowBack />
       </Button>
+
+      {children}
       <Button onClick={handleLogOut}>
         <MdLogout />
       </Button>
