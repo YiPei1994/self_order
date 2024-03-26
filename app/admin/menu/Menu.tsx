@@ -7,10 +7,6 @@ type MenuProps = {
 };
 
 function Menu({ menu }: MenuProps) {
-  const formatAllergies = menu.allergies.map((a, i, array) => {
-    return i !== array.length - 1 ? a + "," : a;
-  });
-
   return (
     <div className="size-[47%] m-1 p-2  bg-primary/10  ">
       <Link href={`/admin/menu/${menu.menu_id}`}>
@@ -24,7 +20,7 @@ function Menu({ menu }: MenuProps) {
         <p className="text-xl uppercase px-2 my-2">{menu.name}</p>
         <div className="flex justify-between items-center px-2">
           <p>{menu.price} €</p>
-          <p className="text-sm">{formatAllergies} </p>
+          <p className="text-sm">{menu.allergies} </p>
         </div>
       </Link>
     </div>

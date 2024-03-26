@@ -2,10 +2,19 @@ export type Menu = {
   menu_id: number;
   name: string;
   type: string;
-  allergies: number[];
+  allergies: string;
   price: number;
   ingredients: string;
   image: string;
+};
+
+export type NewMenu = {
+  name: string;
+  type: string;
+  allergies: string;
+  price: number;
+  ingredients: string;
+  image: any;
 };
 
 export type CartItem = {

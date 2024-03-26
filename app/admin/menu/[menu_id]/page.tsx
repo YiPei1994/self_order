@@ -12,20 +12,35 @@ import { useCart } from "@/store/CartStore";
 import { allergyDetail } from "@/utils/constants";
 import React from "react";
 import { CartItem } from "@/utils/types";
-import { useExactMenu } from "@/app/api/apiMenu";
+import { useDeleteMenu, useExactMenu } from "@/app/api/apiMenu";
 import Spinner from "@/components/ui/Spinner";
 
 import Header from "../../Header";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { MdCreate } from "react-icons/md";
 import CreateEditForm from "../CreateEditForm";
+import { useMenuDrawer } from "@/store/MenuStore";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
+import { BsTrashFill } from "react-icons/bs";
 
 function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
-  const id = params.menu_id;
+  const id = +params.menu_id;
   const { data: menu, isLoading, error } = useExactMenu(id);
-
+  const { hideDrawer, displayDrawer } = useMenuDrawer();
+  const { deleteMenu } = useDeleteMenu();
   const { addToCart } = useCart();
-
+  const router = useRouter();
   if (isLoading) return <Spinner />;
   if (error) return <p>{error.message} </p>;
 
@@ -43,11 +58,12 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
     };
     addToCart(newItem);
   }
+
   return (
     <>
       {" "}
       <Header>
-        <Drawer>
+        <Drawer open={displayDrawer} onOpenChange={hideDrawer}>
           <DrawerTrigger>
             <MdCreate className="text-2xl text-primary" />
           </DrawerTrigger>
@@ -72,16 +88,41 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
             <p className="font-bold	 uppercase">prísad:</p>{" "}
             <p> {ingredients} </p>
           </div>
-
-          <Button className="w-4/5 m-auto" onClick={handleAdd}>
-            Add to cart
-          </Button>
+          <div className="w-4/5 m-auto flex gap-10 items-center justify-between">
+            <Button className="w-2/3" onClick={handleAdd}>
+              Add to cart
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger>
+                <BsTrashFill className="text-2xl text-red-500" />
+              </AlertDialogTrigger>
+              <AlertDialogContent className="w-4/5 m-auto">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() =>
+                      deleteMenu(id, {
+                        onSuccess: () => {
+                          router.replace("/admin/menu");
+                        },
+                      })
+                    }
+                  >
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
         </CardContent>
         <CardFooter>
           <ul className="flex flex-col gap-1">
-            {allergies.map((allergy) =>
+            {allergies.split(",").map((allergy) =>
               allergyDetail
-                .filter((detail) => allergy === detail.id)
+                .filter((detail) => +allergy === detail.id)
                 .map((detail) => (
                   <li className="text-sm" key={detail.id}>
                     <span>{detail.id}</span> - <span>{detail.description}</span>{" "}

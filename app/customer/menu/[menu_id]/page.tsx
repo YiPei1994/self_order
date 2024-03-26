@@ -17,7 +17,7 @@ import Spinner from "@/components/ui/Spinner";
 
 function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
   const id = params.menu_id;
-  const { data: menu, isLoading, error } = useExactMenu(id);
+  const { data: menu, isLoading, error } = useExactMenu(+id);
 
   const { addToCart } = useCart();
   if (isLoading) return <Spinner />;
@@ -60,9 +60,9 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
       </CardContent>
       <CardFooter>
         <ul className="flex flex-col gap-1">
-          {allergies.map((allergy) =>
+          {allergies.split(",").map((allergy) =>
             allergyDetail
-              .filter((detail) => allergy === detail.id)
+              .filter((detail) => +allergy === detail.id)
               .map((detail) => (
                 <li className="text-sm" key={detail.id}>
                   <span>{detail.id}</span> - <span>{detail.description}</span>{" "}
