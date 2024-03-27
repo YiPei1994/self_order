@@ -17,7 +17,10 @@ function Header() {
       <Button onClick={() => router.back()}>
         <MdArrowBack />
       </Button>
-      <p>Vas stul je:{tableNumber}</p>
+      <p>
+        Vas stul je:{" "}
+        <span className="text-2xl text-primary mx-2">{tableNumber}</span>{" "}
+      </p>
       <Cart />
     </header>
   );

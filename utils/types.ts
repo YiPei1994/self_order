@@ -1,7 +1,11 @@
+export type TableNames = "A1" | "A2" | "A3" | "";
+
+export type MenuTypes = "starter" | "main" | "dessert";
+
 export type Menu = {
   menu_id: number;
   name: string;
-  type: string;
+  type: MenuTypes;
   allergies: string;
   price: number;
   ingredients: string;
@@ -10,7 +14,7 @@ export type Menu = {
 
 export type NewMenu = {
   name: string;
-  type: string;
+  type: MenuTypes;
   allergies: string;
   price: number;
   ingredients: string;

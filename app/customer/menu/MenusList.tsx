@@ -30,7 +30,6 @@ function MenusList() {
       {filteredMenus?.map((menu) => (
         <Menu key={menu.menu_id} menu={menu} />
       ))}
-      <Spinner />
     </div>
   );
 }

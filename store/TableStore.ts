@@ -1,8 +1,9 @@
+import { TableNames } from "@/utils/types";
 import { create } from "zustand";
 
 type Table = {
-  tableNumber: "A1" | "A2" | "A3" | "";
-  setTableNumber: (number: "A1" | "A2" | "A3") => void;
+  tableNumber: TableNames;
+  setTableNumber: (number: TableNames) => void;
 };
 
 export const useTable = create<Table>((set) => ({
