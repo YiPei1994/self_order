@@ -23,7 +23,7 @@ function Footer() {
         className={`${
           path.includes("order") ? "text-primary" : ""
         }  flex flex-col gap-1 justify-center items-center text-md border-r w-1/2 ${
-          customer_id ? "" : "pointer-events-none"
+          customer_id ? "" : "pointer-events-none text-slate-500"
         }`}
         href={`/customer/order`}
       >

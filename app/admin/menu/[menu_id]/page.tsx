@@ -50,7 +50,7 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
 
   function handleAdd() {
     const newItem: CartItem = {
-      id: uuidv4(),
+      id: Math.random(),
       menu: menu,
       menu_id,
       quantity: 1,
