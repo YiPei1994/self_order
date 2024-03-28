@@ -1,10 +1,11 @@
-import { CartItem, Menu } from "@/utils/types";
+import { CartItem } from "@/utils/types";
 import { create } from "zustand";
 
 type CartList = {
   cartList: CartItem[];
   addToCart: (item: CartItem) => void;
-  updateQuantity: (id: string, amount: 1 | -1) => void;
+  updateQuantity: (id: number, amount: 1 | -1) => void;
+  emptyCart: () => void;
 };
 
 export const useCart = create<CartList>((set) => ({
@@ -38,4 +39,5 @@ export const useCart = create<CartList>((set) => ({
         )
         .filter((item) => item.quantity > 0),
     })),
+  emptyCart: () => set({ cartList: [] }),
 }));

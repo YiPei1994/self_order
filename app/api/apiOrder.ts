@@ -1,9 +1,10 @@
+import { getWithExpiry } from "@/utils/helpers";
 import supabase from "@/utils/supabase/supabaseClient";
-import { CartItem, TableNames } from "@/utils/types";
-import { useMutation } from "@tanstack/react-query";
-import { v4 as uuidv4 } from "uuid";
+import { CartItem, Order, OrderDetails, TableNames } from "@/utils/types";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateOrder = () => {
+  const queryClient = useQueryClient();
   const { mutate: createOrder } = useMutation({
     mutationFn: async ({
       cart,
@@ -12,8 +13,6 @@ export const useCreateOrder = () => {
       cart: CartItem[];
       table_name: TableNames;
     }) => {
-      console.log(cart, table_name);
-
       try {
         // 1. Update table status
         const { error: tableError } = await supabase
@@ -33,7 +32,8 @@ export const useCreateOrder = () => {
           (acc, cur) => acc + cur.quantity * cur.price,
           0
         );
-        const customer_id = uuidv4();
+        // get customer localstorage id
+        const customer_id = await getWithExpiry("customer_id");
 
         if (!total || !customer_id) {
           throw new Error("Missing customer ID or total price");
@@ -56,6 +56,7 @@ export const useCreateOrder = () => {
               menu_id: item.menu_id,
               quantity: item.quantity,
               customer_id,
+              order_id: orderData[0].id,
             }))
           )
           .select();
@@ -73,7 +74,53 @@ export const useCreateOrder = () => {
         throw error; // Rethrow the error to be caught by the caller
       }
     },
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
   });
 
   return { createOrder };
+};
+
+export const useCustomerOrders = (customer_id: string) => {
+  const {
+    data: orders,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["orders"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("customer_id", customer_id);
+      if (error) {
+        throw new Error(error.message + "No orders from customer.");
+      }
+      return data as Order[];
+    },
+  });
+
+  return { orders, isLoading, error };
+};
+
+export const useOrderById = (id: number) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["orderById", id],
+    queryFn: async () => {
+      const { data: OrderDetails, error } = await supabase
+        .from("orders")
+        .select("*, orderItems(*, menu(*))")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        throw new Error(error.message + "No order detail found.");
+      }
+
+      return OrderDetails as OrderDetails;
+    },
+  });
+
+  return { data, isLoading, error };
 };

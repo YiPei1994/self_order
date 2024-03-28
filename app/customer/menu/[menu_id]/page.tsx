@@ -1,7 +1,7 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { v4 as uuidv4 } from "uuid";
+
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import React from "react";
 import { CartItem } from "@/utils/types";
 import { useExactMenu } from "@/app/api/apiMenu";
 import Spinner from "@/components/ui/Spinner";
+import CustomerOperation from "../../CustomerOperation";
 
 function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
   const id = params.menu_id;
@@ -29,7 +30,7 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
 
   function handleAdd() {
     const newItem: CartItem = {
-      id: uuidv4(),
+      id: Math.random(),
       menu: menu,
       menu_id,
       quantity: 1,
@@ -38,40 +39,44 @@ function MenuDetailsPage({ params }: { params: { menu_id: string } }) {
     addToCart(newItem);
   }
   return (
-    <Card className="border-0  max-w-[390px]">
-      <CardHeader>
-        <img className="rounded-sm" src={image} alt={name} />
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4 ">
-        <div className="w-full items-center justify-between flex">
-          <p className="text-2xl uppercase font-bold">{name} </p>
-          <Badge className="w-fit self-end mr-2">{type} </Badge>{" "}
-        </div>
+    <>
+      <CustomerOperation />
+      <Card className="border-0  max-w-[390px]">
+        <CardHeader>
+          <img className="rounded-sm" src={image} alt={name} />
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4 ">
+          <div className="w-full items-center justify-between flex">
+            <p className="text-2xl uppercase font-bold">{name} </p>
+            <Badge className="w-fit self-end mr-2">{type} </Badge>{" "}
+          </div>
 
-        <p>{price} €</p>
+          <p>{price} €</p>
 
-        <div className="w-[90%] flex flex-col break-words	 ">
-          <p className="font-bold	 uppercase">prísad:</p> <p> {ingredients} </p>
-        </div>
+          <div className="w-[90%] flex flex-col break-words	 ">
+            <p className="font-bold	 uppercase">prísad:</p>{" "}
+            <p> {ingredients} </p>
+          </div>
 
-        <Button className="w-4/5 m-auto" onClick={handleAdd}>
-          Add to cart
-        </Button>
-      </CardContent>
-      <CardFooter>
-        <ul className="flex flex-col gap-1">
-          {allergies.split(",").map((allergy) =>
-            allergyDetail
-              .filter((detail) => +allergy === detail.id)
-              .map((detail) => (
-                <li className="text-sm" key={detail.id}>
-                  <span>{detail.id}</span> - <span>{detail.description}</span>{" "}
-                </li>
-              ))
-          )}
-        </ul>
-      </CardFooter>
-    </Card>
+          <Button className="w-4/5 m-auto" onClick={handleAdd}>
+            Add to cart
+          </Button>
+        </CardContent>
+        <CardFooter>
+          <ul className="flex flex-col gap-1">
+            {allergies.split(",").map((allergy) =>
+              allergyDetail
+                .filter((detail) => +allergy === detail.id)
+                .map((detail) => (
+                  <li className="text-sm" key={detail.id}>
+                    <span>{detail.id}</span> - <span>{detail.description}</span>{" "}
+                  </li>
+                ))
+            )}
+          </ul>
+        </CardFooter>
+      </Card>
+    </>
   );
 }
 

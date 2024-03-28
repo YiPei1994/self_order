@@ -27,7 +27,7 @@ function Table() {
     }
   }
   return (
-    <Card className="bg-primary/10 m-auto  my-10 text-center w-full ">
+    <Card className="bg-primary/10 m-auto  my-10 text-center w-full max-w-[90%] ">
       <CardHeader>
         <CardTitle>Zadejte cislo vas stul:</CardTitle>
       </CardHeader>
@@ -49,7 +49,7 @@ function Table() {
           </Button>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="text-center">
         <p>{message}</p>
       </CardFooter>
     </Card>

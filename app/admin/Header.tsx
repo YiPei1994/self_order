@@ -17,7 +17,7 @@ function Header({ children }: PropsWithChildren) {
     router.push("/login");
   }
   return (
-    <header className="flex items-center justify-between w-full p-4 bg-primary/10">
+    <header className="flex items-center justify-between w-full p-4 bg-primary/10 z-30">
       <Button onClick={() => router.back()}>
         <MdArrowBack />
       </Button>

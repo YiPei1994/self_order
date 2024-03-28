@@ -6,7 +6,7 @@ export const useAllMenus = () => {
   const { data, isLoading, error } = useQuery<Menu[]>({
     queryKey: ["menus"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("MenusTableOne").select("*");
+      const { data, error } = await supabase.from("menu").select("*");
 
       if (error) {
         throw new Error(error.message);
@@ -24,7 +24,7 @@ export const useExactMenu = (id: number) => {
     queryKey: ["menuById", id],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("MenusTableOne")
+        .from("menu")
         .select()
         .eq("menu_id", id)
         .single();
@@ -51,7 +51,7 @@ export const useCreateMenu = () => {
       const imagePath = `${supabaseUrl}/storage/v1/object/public/menuImages/${imageName}`;
 
       const { data, error } = await supabase
-        .from("MenusTableOne")
+        .from("menu")
         .insert([{ ...newMenu, image: imagePath }])
         .select();
 
@@ -64,10 +64,7 @@ export const useCreateMenu = () => {
         .upload(imageName, newMenu.image[0]);
 
       if (stroragError) {
-        await supabase
-          .from("MenusTableOne")
-          .delete()
-          .eq("menu_id", data[0].menu_id);
+        await supabase.from("menu").delete().eq("menu_id", data[0].menu_id);
         console.error(stroragError);
         throw new Error(stroragError.message);
       }
@@ -105,7 +102,7 @@ export const useEditMenu = () => {
         : `${supabaseUrl}/storage/v1/object/public/menuImages/${imageName}`;
 
       const { data, error } = await supabase
-        .from("MenusTableOne")
+        .from("menu")
         .update([{ ...newMenu, image: imagePath }])
         .eq("menu_id", id)
         .select()
@@ -122,7 +119,7 @@ export const useEditMenu = () => {
         .upload(imageName, newMenu.image);
 
       if (stroragError) {
-        await supabase.from("MenusTableOne").delete().eq("menu_id", id);
+        await supabase.from("menu").delete().eq("menu_id", id);
         console.error(stroragError);
         throw new Error(stroragError.message);
       }
@@ -144,10 +141,7 @@ export const useDeleteMenu = () => {
   const queryClient = useQueryClient();
   const { mutate: deleteMenu } = useMutation({
     mutationFn: async (id: number) => {
-      const { error } = await supabase
-        .from("MenusTableOne")
-        .delete()
-        .eq("menu_id", id);
+      const { error } = await supabase.from("menu").delete().eq("menu_id", id);
       if (error) {
         throw new Error(error.message);
       }

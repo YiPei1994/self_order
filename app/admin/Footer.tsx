@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 function Footer() {
   const path = usePathname();
   return (
-    <footer className="flex justify-between mt-auto items-center w-full p-4 bg-primary/10">
+    <footer className="flex justify-between mt-auto items-center w-full p-4 bg-primary/10 z-30">
       <Link
         className={`${
           path.includes("menu") ? "text-primary" : ""
