@@ -27,6 +27,7 @@ import { useTable } from "@/store/TableStore";
 import { useCreateOrder } from "../api/apiOrder";
 import { useRouter } from "next/navigation";
 import { getWithExpiry, setWithExpiry } from "@/utils/helpers";
+import { useCustomerId } from "@/store/MenuStore";
 
 function Cart() {
   const { cartList, emptyCart } = useCart();
@@ -34,15 +35,17 @@ function Cart() {
   const { tableNumber } = useTable();
   const router = useRouter();
   const [close, setClose] = useState(false);
-
+  const { customer_id, setCustomer_id } = useCustomerId();
   function initiateOrder() {
-    if (!getWithExpiry("customer_id")) {
+    if (typeof window !== "undefined" && !getWithExpiry("customer_id")) {
       setWithExpiry("customer_id", uuidv4(), 7200000);
+      setCustomer_id(getWithExpiry("customer_id"));
     }
   }
+
   function handleOrder() {
     if (cartList.length === 0 || tableNumber === "") return;
-    const customer_id = getWithExpiry("customer_id");
+
     createOrder(
       { cart: cartList, table_name: tableNumber, customer_id },
       {

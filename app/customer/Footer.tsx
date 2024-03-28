@@ -4,10 +4,10 @@ import Link from "next/link";
 import { MdRestaurantMenu } from "react-icons/md";
 import { MdOutlineStickyNote2 } from "react-icons/md";
 import { usePathname } from "next/navigation";
-import { getWithExpiry } from "@/utils/helpers";
+import { useCustomerId } from "@/store/MenuStore";
 function Footer() {
   const path = usePathname();
-  const customer_id: string = getWithExpiry("customer_id");
+  const { customer_id } = useCustomerId();
   return (
     <footer className="flex justify-between mt-auto items-center w-full p-4 bg-primary/10 z-30">
       <Link

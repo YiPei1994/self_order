@@ -3,13 +3,15 @@ import { useCustomerOrders } from "@/app/api/apiOrder";
 import ErrorBoundary from "@/app/error";
 import Spinner from "@/components/ui/Spinner";
 import { getWithExpiry } from "@/utils/helpers";
-import React from "react";
+import React, { useEffect } from "react";
 import CustomerOperation from "../CustomerOperation";
 import Order from "./Order";
 import { useRouter } from "next/navigation";
+import { useCustomerId } from "@/store/MenuStore";
 
 function OrderPage() {
-  const customer_id: string = getWithExpiry("customer_id");
+  const { customer_id } = useCustomerId();
+
   const router = useRouter();
   const { orders, isLoading, error } = useCustomerOrders(customer_id);
 
