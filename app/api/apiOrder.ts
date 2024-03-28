@@ -1,4 +1,3 @@
-import { getWithExpiry } from "@/utils/helpers";
 import supabase from "@/utils/supabase/supabaseClient";
 import { CartItem, Order, OrderDetails, TableNames } from "@/utils/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -9,9 +8,11 @@ export const useCreateOrder = () => {
     mutationFn: async ({
       cart,
       table_name,
+      customer_id,
     }: {
       cart: CartItem[];
       table_name: TableNames;
+      customer_id: string;
     }) => {
       try {
         // 1. Update table status
@@ -33,7 +34,6 @@ export const useCreateOrder = () => {
           0
         );
         // get customer localstorage id
-        const customer_id = await getWithExpiry("customer_id");
 
         if (!total || !customer_id) {
           throw new Error("Missing customer ID or total price");

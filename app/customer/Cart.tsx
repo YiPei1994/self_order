@@ -42,9 +42,9 @@ function Cart() {
   }
   function handleOrder() {
     if (cartList.length === 0 || tableNumber === "") return;
-
+    const customer_id = getWithExpiry("customer_id");
     createOrder(
-      { cart: cartList, table_name: tableNumber },
+      { cart: cartList, table_name: tableNumber, customer_id },
       {
         onSuccess: () => {
           emptyCart();
